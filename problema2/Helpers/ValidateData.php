@@ -1,15 +1,14 @@
 <?php
 
 /**
- * validación de datos, que los números correspondan a las cadenas
- * de instrucciones con menajes
+ * valida la información del array recibido
+ * comprueba que todos los campos contengan números
  *
  * @param array $data
- * @return bool
+ * @return array [string $status, string $message]
  */
 function validate_data(array &$data): array
 {
-
     $response = validate_array_number($data);
 
     if ($response['status']) {
@@ -20,7 +19,9 @@ function validate_data(array &$data): array
 }
 
 /**
- *
+ * valida que cada linea del archivo(index del array)
+ * contengan 2 registros por linea, a excepción del primer registro
+ * convierte cada linea de texto en un array de números
  *
  * @param array $data
  * @return array
@@ -32,7 +33,7 @@ function validate_array_number(array &$data): array
 
         $numbers = explode(" ", $text);
 
-        if (size_equal_array($numbers, 2)) {
+        if (count($numbers) == 2) {
             foreach ($numbers as $key => $num) {
                 if (is_numeric($num)) {
                     $numbers[$key] = (int) $num;
@@ -52,8 +53,12 @@ function validate_array_number(array &$data): array
 }
 
 /**
+ * hace las validaciones correspondientes
+ * valida que la información sea consistente
+ * que el numero de registros este en el rango establecido (entre 1 y 10000)
+ *
  * @param array $data
- * @return array
+ * @return array [string $status, string $message]
  */
 function validate_max_size(array $data): array
 {
@@ -67,13 +72,4 @@ function validate_max_size(array $data): array
 
     return generate_response($errors);
 
-}
-
-/**
- *@param string $message
- *@return bool
- */
-function validate_string(string $message): bool
-{
-    return preg_match("/^[\w\d]+$/i", $message);
 }

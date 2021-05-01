@@ -1,4 +1,7 @@
 <?php
+/***
+ * importamos todos los archivos
+ */
 
 require './Helpers/globalFunctions.php';
 require './Helpers/processFile.php';

@@ -2,84 +2,83 @@
 
 /**
  * validación de datos, que los números correspondan a las cadenas
- * de instrucciones con menajes
+ * de instrucciones con los mensajes
  *
  * @param array $data
- * @return bool
+ * @return array [string $status, string $message]
  */
-function validate_data(array $data): bool
+function validate_data(array &$data): array
 {
-    if (!size_equal_array($data, 4)) {
-        return false;
-    }
+    if (count($data) == 4) {
 
-    return validate_array_number($data);
-}
+        $response = validar_instrucciones($data);
 
-/**
- * valida que el contenido de la primera posición del arreglo sean úmeros
- *
- * @param array $data
- * @return array
- */
-function validate_array_number(array $data): bool
-{
-    $numbers = explode(" ", $data[0]);
+        if ($response["status"]) {
+            if ($data[0][0] != strlen($data[1])) {
+                $response = generate_response("Error en linea 2, la longitud no coincide");
+            }
 
-    if (!size_equal_array($numbers, 3)) {
-        return false;
-    }
+            if ($data[0][1] != strlen($data[2])) {
+                $response = generate_response("Error en linea 3, la longitud no coincide");
+            }
 
-    foreach ($numbers as $key => $num) {
-        if (!is_numeric($num)) {
-            return false;
-        } else {
-            $numbers[$key] = (int) $num;
+            if ($data[0][2] != strlen($data[3])) {
+                $response = generate_response("Error en linea 4, la longitud no coincide");
+            }
         }
+
+        return $response;
+
+    } else {
+
+        return generate_response("Inconsistencia en los datos");
     }
 
-    return validate_max_size($data, $numbers);
 }
 
 /**
- * @param array $data
- * @param array $numArray
- * @return bool
- */
-function validate_max_size(array $data, array $numbers)
-{
-    $M1 = $numbers[0] >= 2 || $numbers[0] <= 50;
-    $M2 = $numbers[1] >= 2 || $numbers[1] <= 50;
-    $N  = $numbers[2] >= 3 || $numbers[2] <= 5000;
-
-    $ins1 = strlen($data[1]) == $numbers[0];
-    $ins2 = strlen($data[2]) == $numbers[1];
-    $msg  = strlen($data[3]) == $numbers[2];
-
-    $validate_message = validate_string($data[3]);
-
-    return ($M1 && $M2 && $N && $ins1 && $ins2 && $msg && $validate_message);
-}
-
-/**
- *@param string $message
- *@return bool
- */
-function validate_string(string $message): bool
-{
-    return preg_match("/^[\w\d]+$/i", $message);
-}
-
-/**
- * valida si el tamaño del arreglo recibido
- * es el mismo que el numero recibido
+ * valida que las instrucciones sean 3, separadas po un espacio
+ * comprueba que las instrucciones sean numéricas
+ * valida que las instrucciones estén en el rango establecido
+ * valida que el mensaje solo contenga letras y/o números
  *
- * @param array $array
- * @param int $equal
- * @return bool
+ * @param array $data
+ * @return array [string $status, string $message]
  */
-function size_equal_array(array $array, Int $equal)
+function validar_instrucciones(array &$data): array
 {
-    $size = count($array);
-    return $size == $equal;
+    $error  = "";
+    $insArr = explode(" ", $data[0]);
+
+    if (count($insArr) != 3) {
+        $error = "Error en datos: linea 1, cantidad de parámetros es errónea";
+
+    } else {
+        foreach ($insArr as $key => $num) {
+
+            if (is_numeric($num)) {
+                $insArr[$key] = (int) $num;
+            } else {
+                $error = "Error en datos: linea 1, parametros no numéricos";
+                break;
+            }
+        }
+
+        if ($error == "") {
+            $M1 = $insArr[0];
+            $M2 = $insArr[1];
+            $N  = $insArr[2];
+
+            if (!($M1 >= 2 and $M1 <= 50 and $M2 >= 2 and $M2 <= 50 and $N >= 3 and $N <= 5000)) {
+                $error = "Error en datos: linea 1, parámetros erróneos";
+            } else {
+                $error = preg_match("/^[\w\d]+$/i", $data[3]) ? "" : "Error en datos: linea 4, formato de mensaje";
+            }
+            $data[0] = $insArr;
+        }
+
+    }
+
+    return generate_response($error);
+
 }

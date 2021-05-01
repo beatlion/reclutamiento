@@ -50,14 +50,15 @@ def validar_datos(data):
 
     if response["status"]:
         responseData = response["data"]
+
         if responseData[0][0] != len(responseData[1]):
-            return generate_response("Error en linea 2, la longitud no coincide")
+            response = generate_response("Error en linea 2, la longitud no coincide")
 
         if responseData[0][1] != len(responseData[2]):
-            return generate_response("Error en linea 3, la longitud no coincide")
+            response = generate_response("Error en linea 3, la longitud no coincide")
 
-        if responseData[0][1] != len(responseData[2]):
-            return generate_response("Error en linea 4, la longitud no coincide")
+        if responseData[0][2] != len(responseData[3]):
+            response = generate_response("Error en linea 4, la longitud no coincide")
 
     return response
 
@@ -68,14 +69,14 @@ def validar_instrucciones(data):
     nuevaLista = []
 
     if len(insList) != 3:
-        error = "Error en datos: linea 1, cantidad de parametros erronea"
+        error = "Error en datos: linea 1, cantidad de parámetros es errónea"
     else:
         for num in insList:
             if num.isnumeric():
                 nuevaLista.append(int(num))
 
             else:
-                error = "Error en datos: linea 1, parametros no numéricos"
+                error = "Error en datos: linea 1, parámetros no numéricos"
                 break
 
         if error == "":
@@ -86,9 +87,9 @@ def validar_instrucciones(data):
             if not (
                 M1 >= 2 and M1 <= 50 and M2 >= 2 and M2 <= 50 and N >= 3 and N <= 5000
             ):
-                error = "Error en datos: linea 1, parametros erroneos"
+                error = "Error en datos: linea 1, parámetros erróneos"
 
-            if error == "":
+            else:
                 error = (
                     ""
                     if re.match("^[a-zA-Z0-9]+$", data[3]) is not None

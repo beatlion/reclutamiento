@@ -9,14 +9,13 @@
 function txt_to_array(string $ruta): array
 {
     $res = array();
+    $fp  = fopen($ruta, "r");
 
-    $fp = fopen($ruta, "r");
-
-    while (!feof($fp)) {
+    while (!feof($fp)) { //recorre linea por linea del txt
         $linea = fgets($fp);
         $linea = trim($linea);
 
-        if ($linea != "") {
+        if ($linea != "") { //ignora lineas vaciás
             $res[] = $linea;
         }
     }
