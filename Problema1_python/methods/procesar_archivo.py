@@ -2,8 +2,8 @@ import os
 import re
 
 
-def procesar_archivo():
-    response = read_txt()
+def procesar_archivo(rutaArchivo):
+    response = read_txt(rutaArchivo)
 
     if response["status"]:
         if len(response["data"]) == 4:
@@ -19,14 +19,13 @@ def procesar_archivo():
     return response
 
 
-def read_txt():
+def read_txt(rutaArchivo):
     listData = []
     error = ""
     status = True
 
     try:
-        rutaTxt = os.path.abspath("problema1.txt")
-        txt = open(rutaTxt, "r")
+        txt = open(rutaArchivo, "r")
         line = txt.readline()
 
         while line:
@@ -138,6 +137,8 @@ def crear_txt(resultado):
 def generate_response(error, data=[]):
     return {
         "status": (error == ""),
-        "message": error if (error != "") else "Archivo procesado correctamente",
+        "message": error
+        if (error != "")
+        else "Archivo procesado correctamente, se genero un archivo (resultados_problema1.txt) con los resultados",
         "data": data if (error == "") else [],
     }
