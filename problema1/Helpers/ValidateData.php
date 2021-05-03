@@ -69,11 +69,30 @@ function validar_instrucciones(array &$data): array
             $M2 = $insArr[1];
             $N  = $insArr[2];
 
-            if (!($M1 >= 2 and $M1 <= 50 and $M2 >= 2 and $M2 <= 50 and $N >= 3 and $N <= 5000)) {
-                $error = "Error en datos: linea 1, parámetros erróneos";
+            if ($M1 < 2) {
+                $error = 'Error en datos: linea 1, la longitud de la instrucción 1 debe ser mayor a 2';
+
+            } else if ($M1 > 50) {
+                $error = 'Error en datos: linea 1, la longitud de la instrucción 1 debe ser menor a 50';
+
+            } else if ($M2 < 2) {
+                $error = 'Error en datos: linea 1, la longitud de la instrucción 2 debe ser mayor a 2';
+
+            } else if ($M2 > 50) {
+                $error = 'Error en datos: linea 1, la longitud de la instrucción 2 debe ser menor a 50';
+
+            } else if ($N < 3) {
+                $error = 'Error en datos: linea 1, la longitud del mensaje debe ser mayor a 3';
+
+            } else if ($N > 5000) {
+                $error = 'Error en datos: linea 1, la longitud de la instrucción 2 debe ser menor a 5000';
+
             } else {
-                $error = preg_match("/^[\w\d]+$/i", $data[3]) ? "" : "Error en datos: linea 4, formato de mensaje";
+                $error = preg_match("/^[\w\d]+$/i", $data[3])
+                ? ""
+                : "Error en datos: linea 4, formato de mensaje, solo debe contener letras y números";
             }
+
             $data[0] = $insArr;
         }
 

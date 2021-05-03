@@ -4,12 +4,15 @@ from methods.procesar_archivo import procesar_archivo
 
 def callback():
     rutaArchivo = filedialog.askopenfilename()
-    response = procesar_archivo(rutaArchivo)
+    if rutaArchivo != "":
+        response = procesar_archivo(rutaArchivo)
 
-    if response["status"]:
-        messagebox.showinfo(message=response["message"], title="Todo cool :)")
+        if response["status"]:
+            messagebox.showinfo(message=response["message"], title="Todo cool :)")
+        else:
+            messagebox.showerror(message=response["message"], title="Error :/")
     else:
-        messagebox.showerror(message=response["message"], title="Error :/")
+        messagebox.showinfo(message="ingrese un archivo", title="Info")
 
 
 ventana = Tk()

@@ -61,10 +61,50 @@ function generate_tabla_ventajas(array $data): array
  */
 function get_winner(array $tablaVentaja): string
 {
-    arsort($tablaVentaja);
-    foreach ($tablaVentaja as $key => $value) {
-        return str_replace('-', ' ', $key);
 
+    $resp    = "No se pudo obtener un ganador";
+    $arrTemp = quitarEmpates($tablaVentaja);
+    arsort($arrTemp);
+
+    foreach ($arrTemp as $key => $value) {
+        $resp = str_replace("-", " ", $key);
+        break;
+    }
+
+    return $resp;
+}
+
+function quitarEmpates($arr): array
+{
+    $arrEmpates = [];
+    //identificando los empates
+    foreach ($arr as $key => $value) {
+        foreach ($arr as $key2 => $value2) {
+            if ($key != $key2 && $value == $value2) {
+                $arrEmpates[] = $value;
+            }
+        }
+    }
+
+    //elimina los repetidos en los empates
+    $arrEmpates = array_unique($arrEmpates);
+
+    if (count($arrEmpates) > 0) {
+        $arraySinEmpates = [];
+
+        //genera un nuevo array sin los empates
+        foreach ($arrEmpates as $value) {
+            foreach ($arr as $key => $value2) {
+                if ($value != $value2) {
+                    $arraySinEmpates[$key] = $value2;
+                }
+            }
+        }
+
+        return $arraySinEmpates;
+
+    } else {
+        return $arr;
     }
 
 }

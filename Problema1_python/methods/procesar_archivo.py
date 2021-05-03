@@ -83,16 +83,23 @@ def validar_instrucciones(data):
             M2 = nuevaLista[1]
             N = nuevaLista[2]
 
-            if not (
-                M1 >= 2 and M1 <= 50 and M2 >= 2 and M2 <= 50 and N >= 3 and N <= 5000
-            ):
-                error = "Error en datos: linea 1, parámetros erróneos"
+            if M1 < 2:
+                error = "Error en datos: linea 1, la longitud de la instrucción 1 debe ser mayor a 2"
+
+            elif M1 > 50:
+                error = "Error en datos: linea 1, la longitud de la instrucción 1 debe ser menor a 50"
+
+            elif M2 < 2:
+                error = "Error en datos: linea 1, la longitud de la instrucción 2 debe ser mayor a 2"
+
+            elif M2 > 50:
+                error = "Error en datos: linea 1, la longitud de la instrucción 2 debe ser menor a 50"
 
             else:
                 error = (
                     ""
                     if re.match("^[a-zA-Z0-9]+$", data[3]) is not None
-                    else "Error en datos: linea 4, formato de mensaje"
+                    else "Error en datos: linea 4, formato de mensaje, solo debe contener letras y números"
                 )
 
         data[0] = nuevaLista
@@ -102,11 +109,13 @@ def validar_instrucciones(data):
 
 def validar_mensaje(data):
 
+    nuevoM1 = limpiar_mensaje(data[1])
+    nuevoM2 = limpiar_mensaje(data[2])
     nuevoMensaje = limpiar_mensaje(data[3])
     resultado = ""
 
-    M1 = "Si\n" if data[1] in nuevoMensaje else "No\n"
-    M2 = "Si" if data[2] in nuevoMensaje else "No"
+    M1 = "Si\n" if nuevoM1 in nuevoMensaje else "No\n"
+    M2 = "Si" if nuevoM2 in nuevoMensaje else "No"
 
     return M1 + M2
 

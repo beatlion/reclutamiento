@@ -9,10 +9,17 @@
  */
 function result(array $data): array
 {
+    $errors = "";
     $result = result_message($data);
-    create_txt($result);
 
-    return generate_response("");
+    if ($result != "") {
+        create_txt($result);
+
+    } else {
+        $errors = "Se recibieron dos posibles mensajes, por lo cual no se pudo identificar el mensaje correcto";
+    }
+
+    return generate_response($errors);
 }
 
 /**
@@ -25,11 +32,16 @@ function result(array $data): array
  */
 function result_message(array $data): string
 {
+    $newM1      = clean_string($data[1]);
+    $newM2      = clean_string($data[2]);
     $newMessage = clean_string($data[3]);
-    $M1         = (strpos($newMessage, $data[1]) !== false) ? "Si\n" : "No\n";
-    $M2         = (strpos($newMessage, $data[2]) !== false) ? "Si" : "No";
 
-    return $M1 . $M2;
+    $M1 = (strpos($newMessage, $newM1) !== false) ? "Si" : "No";
+    $M2 = (strpos($newMessage, $newM2) !== false) ? "Si" : "No";
+
+    $result = ($M1 == 'Si' && $M2 == 'Si') ? "" : "$M1\n$M2";
+
+    return $result;
 }
 
 /**
