@@ -1,6 +1,10 @@
 <?php
-require './Helpers/helpers_import.php';
-$response = process_file();
+require_once 'vendor/autoload.php';
+
+use App\File\Processor;
+
+$file     = new Processor();
+$response = $file->process($_FILES);
 
 require './template/header.php';
 

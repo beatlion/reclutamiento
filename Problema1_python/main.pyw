@@ -1,11 +1,18 @@
 from tkinter import Tk, filedialog, Button, messagebox
-from methods.procesar_archivo import procesar_archivo
+import sys
+
+sys.path.append("./app/")
+from Processor import Processor
+
+
+# from methods.procesar_archivo import procesar_archivo
 
 
 def callback():
     rutaArchivo = filedialog.askopenfilename()
     if rutaArchivo != "":
-        response = procesar_archivo(rutaArchivo)
+        PObj = Processor()
+        response = PObj.procesar_archivo(rutaArchivo)
 
         if response["status"]:
             messagebox.showinfo(message=response["message"], title="Todo cool :)")

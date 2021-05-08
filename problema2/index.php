@@ -1,4 +1,6 @@
-<?php require './template/header.php';?>
+<?php
+require_once 'template/header.php';
+?>
 
 <form
   action="./reader.php"
@@ -17,7 +19,7 @@
       alt="file txt"
       class="w-16 h-16 mx-auto cursor-pointer filter drop-shadow-xl"
     />
-    <input type="file" name="file" class="hidden" required accept="text/plain" />
+    <input type="file" name="file" class="hidden"  accept="text/plain" />
   </label>
   <button
     type="submit"
@@ -27,4 +29,5 @@
   </button>
 </form>
 
-<?php require './template/footer.php';?>
+<?php
+require_once 'template/footer.php';

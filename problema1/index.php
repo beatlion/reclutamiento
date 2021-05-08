@@ -1,4 +1,6 @@
-<?php require './template/header.php';?>
+<?php
+require_once 'template/header.php';
+?>
 
 <form
   action="./reader.php"
@@ -27,4 +29,5 @@
   </button>
 </form>
 
-<?php require './template/footer.php';?>
+<?php
+require_once 'template/footer.php';

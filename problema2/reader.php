@@ -1,6 +1,10 @@
 <?php
-require './Helpers/helpers_import.php';
-$response = process_file();
+require_once 'vendor/autoload.php';
+
+use App\File\Processor;
+
+$file     = new Processor();
+$response = $file->process($_FILES);
 
 require './template/header.php';
 
@@ -26,8 +30,9 @@ se crea un link de descarga del resultado, si no se produjo algún error
 se genera un script, para ejecutar un click en el link de descarga
 esto para evitar un re-direccionamiento o un click de parte del usuario
  */
+
 if ($response['status']) {
-    echo '<a id="download_success" href="./result/winner.txt" download class="hidden"></a>';
+    echo '<a id="download_success" href="./result.txt" download class="hidden"></a>';
     echo '<script>
       const DS= document.querySelector(\'#download_success\');
       DS.click();
