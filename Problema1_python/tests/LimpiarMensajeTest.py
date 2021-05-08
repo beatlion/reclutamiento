@@ -14,7 +14,3 @@ class LimpiarMensajeTest(unittest.TestCase):
 
         self.assertEqual("hola", responseTrue)
         self.assertNotEqual("hola", responseFalse)
-
-
-if __name__ == "__main__":
-    unittest.main()

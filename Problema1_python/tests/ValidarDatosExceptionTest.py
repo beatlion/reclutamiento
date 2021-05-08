@@ -72,7 +72,3 @@ class ValidarDatosExceptionTest(unittest.TestCase):
             raise ValueError(
                 "==>  test_validar_datos_instrucciones_genera_exception_cuando_en_linea_1_parametro_3_no_coincida_con_texto_linea_4"
             )
-
-
-if __name__ == "__main__":
-    unittest.main()

@@ -226,7 +226,3 @@ class ValidarInstruccionesExceptionTest(unittest.TestCase):
             raise ValueError(
                 "==> test_validar_instrucciones_genera_un_exception_linea_4_por_recibir_caracteres_especiales"
             )
-
-
-if __name__ == "__main__":
-    unittest.main()

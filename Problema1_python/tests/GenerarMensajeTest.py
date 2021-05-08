@@ -43,7 +43,3 @@ class GenerarMensajeTest(unittest.TestCase):
             raise ValueError(
                 "==>  test_generar_mensaje_genera_un_exception_por_recibir_dos_mensajes_posibles"
             )
-
-
-if __name__ == "__main__":
-    unittest.main()
